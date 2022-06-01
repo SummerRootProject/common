@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.first.common.mapper.LoginMapper">
+
+    <!--유저 로그인-->
+    <select id="loadUserByUsername" parameterType="String" resultType="UserDTO">
+        SELECT * FROM user
+        WHERE user_id = #{user_id}
+    </select>
+
+    <!--회원가입-->
+    <insert id="signUp" parameterType="UserDTO">
+        INSERT INTO user
+            (user_id, user_pw, user_name, user_phone, user_email, user_create_date, user_modify_date, user_agree_1, user_agree_2, user_address)
+        VALUES (#{user.user_id}, #{user.user_pw}, #{user.user_name}, #{user.user_phone}, #{user.user_email}, NOW(), NOW(), #{user.user_agree_1}, #{user.user_agree_2}, #{user.user_address})
+    </insert>
+
+</mapper>

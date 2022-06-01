@@ -33,7 +33,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider
 		}
 		else
 		{
-//			int login_time = loginService.updateLoginTime(user.getAdmin_no());
+//			int login_time = loginService.updateLoginTime(user.getUser_no());
 
 			return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 		}

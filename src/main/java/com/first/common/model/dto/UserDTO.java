@@ -14,6 +14,22 @@ public class UserDTO implements UserDetails{
     private int user_no;
     private String user_id;
     private String user_pw;
+    private String user_name;
+    private String user_phone;
+    private String user_email;
+    private String user_create_date;
+    private String user_modify_date;
+
+    private String user_phone_1;
+    private String user_phone_2;
+    private String user_phone_3;
+    private String user_email1;
+    private String user_email2;
+    private String user_address;
+    private int user_agree_1;
+    private int user_agree_2;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -55,4 +71,7 @@ public class UserDTO implements UserDetails{
         // TODO Auto-generated method stub
         return true;
     }
+
+
+
 }

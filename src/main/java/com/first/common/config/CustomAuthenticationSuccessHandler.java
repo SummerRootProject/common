@@ -17,9 +17,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	private String defaultUrl = "/index";
 	
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
-		
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException
+	{
 		System.out.println("CustomAuthenticationSuccessHandler 37line : " + authentication.getName());
 		
 		HttpSession session = request.getSession();
@@ -29,8 +28,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		session.setMaxInactiveInterval(3600 * 24);
 		
 		response.setStatus(200);
-//		response.getWriter().print(defaultUrl);
-//		response.getWriter().flush();
 		
 		response.sendRedirect(request.getContextPath() + defaultUrl);		
 	}

@@ -48,12 +48,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 			.csrf().disable()
 			.authorizeRequests()
 //				.antMatchers("/**").permitAll()
-				.antMatchers("/login").anonymous()
+//				.antMatchers("/user/login").anonymous()
+//				.antMatchers("/user/signup", "static/**", "/resources/**").permitAll()
 //				.antMatchers("/join").hasAuthority("0")
-				.anyRequest().authenticated()
+//				.anyRequest().authenticated()
+				.anyRequest().permitAll() //로그인, 회원가입 css 깨져서 임시로 변경해놓음.
 			.and()
 			.formLogin()
-//				.loginPage("/login")
+				.loginPage("/user/login")
 				.usernameParameter("user_id")
 				.passwordParameter("user_pw")
 				.successHandler(successHandler)
@@ -61,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 			.and()
 				.logout()
 				.logoutUrl("/logout")
-				.logoutSuccessUrl("/login")
+				.logoutSuccessUrl("/user/login")
 				.invalidateHttpSession(true)
 				.permitAll();
 	}
@@ -82,7 +84,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	public void configure(WebSecurity web) throws Exception
 	{
 	    web.httpFirewall(defaultHttpFirewall());
-	    web.ignoring().antMatchers("/assets/**");
+
+	    web.ignoring().antMatchers("/static/**");
 	}
 
 	@Bean
