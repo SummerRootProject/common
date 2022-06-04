@@ -12,6 +12,7 @@ public interface LoginService {
     //유저 로그인 업데이트
     int updateLoginTime(int user_no);
 
+    //회원가입
     int signUp(UserDTO user);
 
 
