@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.first.common.mapper.NotiMapper">
+
+    <!--공지사항 목록-->
+    <select id="getNotificationList" resultType="NotiDTO">
+        SELECT * FROM notification
+        ORDER BY noti_id
+    </select>
+
+    <!--공지사항 검색-->
+<!--  Todo: 이벤트 혹은 카테고리별 검색 -->
+    <select id="searchNotification" parameterType="NotiDTO" resultType="NotiDTO">
+        SELECT * FROM notification
+        WHERE 1=1
+        <choose>
+            <when test="keyword_type != null or !keyword_type.equals('')">
+                AND ${keyword_type} LIKE CONCAT('%',#{keyword},'%')
+            </when>
+            <when test="keyword_type == null or keyword_type.equals('')">
+            </when>
+        </choose>
+        <choose>
+            <when test='start_date.equals("")'>
+            </when>
+            <when test='!start_date.equals("")'>
+                <![CDATA[
+ 				AND DATE(noti_reg_date) >= #{start_date} AND DATE(noti_reg_date) <= #{end_date}
+			]]>
+            </when>
+        </choose>
+        ORDER BY noti_id DESC
+    </select>
+
+    <!--공지사항 등록-->
+    <insert id="insertNotification" parameterType="NotiDTO" useGeneratedKeys="true" keyProperty="noti_id">
+        <if test="event_start_date != ''">
+        INSERT INTO notification
+            (user_id, noti_cat_id, noti_title, noti_content, noti_reg_date, noti_mod_date, noti_count, event_start_date, event_end_date)
+        VALUES (#{user_id}, #{noti_cat_id}, #{noti_title}, #{noti_content}, NOW(), NOW(), 0, #{event_start_date}, #{event_end_date})
+        </if>
+        <if test="event_start_date == ''">
+            INSERT INTO notification
+            (user_id, noti_cat_id, noti_title, noti_content, noti_reg_date, noti_mod_date, noti_count)
+            VALUES (#{user_id}, #{noti_cat_id}, #{noti_title}, #{noti_content}, NOW(), NOW(), 0)
+        </if>
+    </insert>
+
+
+</mapper>
